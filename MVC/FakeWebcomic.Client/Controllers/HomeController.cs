@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FakeWebcomic.Client.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FakeWebcomic.Client.Controllers
 {
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -19,6 +16,9 @@ namespace FakeWebcomic.Client.Controllers
             _logger = logger;
         }
 
+        [Route("~/")]
+        [Route("/Home")]
+        [Route("~/Home/Index")]
         [HttpGet]
         public IActionResult Index()
         {
