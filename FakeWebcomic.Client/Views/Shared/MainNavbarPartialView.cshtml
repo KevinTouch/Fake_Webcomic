@@ -1,0 +1,38 @@
+<!--switches to toggleable at sm window size-->
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Archive">FakeWebcomic</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Archive" method="get">FakeWebcomic Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="About" method="get">About FakeWebcomic</a>
+                </li>
+                @if (@User == null)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">Author Sign-In</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">@User.Identity.Name's Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <p>Switch Profiles</p>
+                    </li>
+                    <li class="nav-item">
+                        <p>Sign Out</p>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
