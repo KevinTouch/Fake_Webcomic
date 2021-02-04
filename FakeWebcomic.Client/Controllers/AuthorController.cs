@@ -31,8 +31,8 @@ namespace FakeWebcomic.Client.Controllers
                     var ComicBooks = JsonConvert.DeserializeObject<List<ComicBookModel>>(await response.Content.ReadAsStringAsync());
                     if (ComicBooks != null)
                     {
-                        AuthorsComicBooks = ComicBooks.FindAll(c => c.Title == User.Identity.Name);
-                        AuthorsComicBooks.OrderBy(c => c.Title);
+                        AuthorsComicBooks = (List<ComicBookModel>)ComicBooks.FindAll(
+                            c => c.Title == User.Identity.Name).OrderBy(c => c.Title);
                     }
                     return View("AuthorHomeView", new AuthorHomeViewModel(User.Identity.Name, AuthorsComicBooks));
                 }
