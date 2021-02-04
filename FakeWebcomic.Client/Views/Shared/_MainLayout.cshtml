@@ -25,6 +25,35 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="About">About</a>
                         </li>
+                        @if (@User == null)
+                        {
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">Author Sign-In</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                    Welcome, @User.Identity.Name!
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                                    <ul class="navbar-nav flex-grow-1">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">@User.Identity.Name's Home</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <p>Switch Profiles</p>
+                                        </li>
+                                        <li class="nav-item">
+                                            <p>Sign Out</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
