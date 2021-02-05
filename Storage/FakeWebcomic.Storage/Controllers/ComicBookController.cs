@@ -50,5 +50,13 @@ namespace FakeWebcomic.Storage.Models
             var total = _ctx.GetComicBooks().Count();
             return await Task.FromResult(Ok(total));
         }
+
+        // GET api/comicbook/{author}
+        [HttpGet("{author}")]
+        public async Task<IActionResult> GetComicBooksByAuthor(string author)
+        {
+            var comicbooks = _ctx.GetComicBooks().Where(b => b.Author == author);
+            return await Task.FromResult(Ok(comicbooks));
+        }
     }
 }

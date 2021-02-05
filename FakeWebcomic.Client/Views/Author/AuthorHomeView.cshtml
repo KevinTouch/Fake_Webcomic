@@ -1,17 +1,17 @@
-@* @model FakeWebcomic.Client.Models.AuthorHomeViewModel *@
-@using System.Security.Claims;
+@model FakeWebcomic.Client.Models.AuthorHomeViewModel
 
 @{
     Layout = "_MainLayout";
 }
 
-@* <h1>@Model.Name's Webcomics</h1> *@
-
-@foreach (var claim in ((ClaimsIdentity)User.Identity).Claims)
-{
-    <dt title="@claim.Type">@claim.Type</dt>
-    <dd>@claim.Value</dd>
-}
+<h2>@ViewBag.name's Webcomics</h2>
+<p>List of Comic Books made by ViewBag.name: </p>
+<ul>
+    @foreach (var item in Model.ComicBooks)
+    {
+        <li>@item.Title</li>
+    }
+</ul>
 
 @* @if (Model.ComicBooks != null) *@
 @* { *@
