@@ -2,10 +2,10 @@ namespace FakeWebcomic.Client.Models
 {
     public class MainAboutViewModel
     {
-        public int NumberOfComicBooks {get;set;}
-        public int NumberOfPages {get;set;}
+        public string NumberOfComicBooks { get; set; }
+        public string NumberOfPages { get; set; }
 
-        public MainAboutViewModel(int numberofcomicbooks, int numberofpages)
+        public MainAboutViewModel(string numberofcomicbooks, string numberofpages)
         {
             NumberOfComicBooks = numberofcomicbooks;
             NumberOfPages = numberofpages;

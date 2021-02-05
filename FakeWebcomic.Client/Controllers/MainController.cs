@@ -2,6 +2,7 @@ using FakeWebcomic.Client.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace FakeWebcomic.Client.Controllers
     public class MainController : Controller
     {
         private string _webcomicsUri = "https://localhost:5001/api/comicbook";
+        private string _baseApiUri = "https://localhost:5001/api/";
         private HttpClientHandler _clientHandler = new HttpClientHandler();
 
         //Archive
@@ -47,21 +49,16 @@ namespace FakeWebcomic.Client.Controllers
 
             using (var _http = new HttpClient(_clientHandler))
             {
-                var response = await _http.GetAsync(_webcomicsUri);
-                if (response.IsSuccessStatusCode)
+                var cbResponse = await _http.GetAsync(_baseApiUri + "comicbook/total");
+                var cpResponse = await _http.GetAsync(_baseApiUri + "comicpage/total");
+
+                if (cbResponse.IsSuccessStatusCode && cpResponse.IsSuccessStatusCode)
                 {
-                    var ComicBooks = JsonConvert.DeserializeObject<List<ComicBookModel>>(await response.Content.ReadAsStringAsync());
-                    int numberofpages = 0;
-                    foreach (var webcomic in ComicBooks)
-                    {
-                        if (webcomic.ComicPages == null)
-                        {
-                            continue;
-                        }
-                        numberofpages += webcomic.ComicPages.Count;
-                    }
-                    return View("MainAboutView", new MainAboutViewModel(ComicBooks.Count(), numberofpages));
+                    var totalComicBooks = await cbResponse.Content.ReadAsStringAsync();
+                    var totalComicPages = await cpResponse.Content.ReadAsStringAsync();
+                    return View("MainAboutView", new MainAboutViewModel(totalComicBooks, totalComicPages));
                 }
+
                 return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
         }

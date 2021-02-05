@@ -42,5 +42,13 @@ namespace FakeWebcomic.Storage.Models
             _ctx.Save();
             return await Task.FromResult(Ok("Comic book was removed!"));
         }
+
+        // POST api/comicbook/total
+        [HttpGet("total")]
+        public async Task<IActionResult> GetTotalComicBooks()
+        {
+            var total = _ctx.GetComicBooks().Count();
+            return await Task.FromResult(Ok(total));
+        }
     }
 }
