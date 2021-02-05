@@ -20,7 +20,7 @@ namespace FakeWebcomic.Storage.Models
         [HttpGet]
         public async Task<IActionResult> GetComicBooks()
         {
-            var comicBooks = _ctx.GetComicBooks(); //.Include(b => b.ComicPages);
+            var comicBooks = _ctx.GetComicBooks().Include(b => b.ComicPages);
             return await Task.FromResult(Ok(comicBooks));
         }
 
