@@ -4,21 +4,62 @@
     Layout = "_MainLayout";
 }
 
-<h2>@ViewBag.name's Webcomics</h2>
-<p>List of Comic Books made by ViewBag.name: </p>
-<ul>
-    @foreach (var item in Model.ComicBooks)
-    {
-        <li>@item.Title</li>
-    }
-</ul>
+<div class="container">
+    <div class="row">
+        <div class=col-sm-6>
+            <h2>@ViewBag.name's Webcomics</h2>
+            <p>List of Comic Books made by @ViewBag.name: </p>
+            <ul>
+                @foreach (var item in Model.ComicBooks)
+                {
+                    <li>@item.Title
+                        <form asp-controller="Author" asp-action="DeleteComic" method="POST"
+                            asp-route-comicbook="@item.Title">
+                            <button class="btn btn-danger btn-sm" type="submit" value="@item.Title">
+                                Delete Comic
+                            </button>
+                        </form>
+                    </li>
+                }
+        </div>
+        <div class=col-sm-6>
+            <form asp-controller="Author" asp-action="AddComic" method="POST">
+                <div class="form-group">
+                    <label for="AuthorInput">Author: </label>
+                    <input id="AuthorInput" class="form-control" asp-for="Author" placeholder=@ViewBag.name disabled />
+                </div>
+                <div class="form-group">
+                    <label for="AuthorTitle">Title: </label>
+                    <input id="AuthorTitle" class="form-control" asp-for="Title" />
+                </div>
+                <div class="form-group">
+                    <label for="AuthorGenre">Genre: </label>
+                    <input id="AuthorGenre" class="form-control" asp-for="Genre" />
+                </div>
+                <div class="form-group">
+                    <label for="AuthorEdition">Edition Number: </label>
+                    <input id="AuthorEdition" class="form-control" asp-for="EditionNumber" />
+                </div>
+                <div class="form-group">
+                    <label for="AuthorDescription">Description: </label>
+                    <textarea id="AuthorDescription" class="form-control" asp-for="Description"></textarea>
+                </div>
+                <button class="btn btn-success" type="submit">Add New Comic</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 
 @* @if (Model.ComicBooks != null) *@
 @* { *@
 @* foreach (var comicbook in Model.ComicBooks) *@
 @* { *@
 @* <section> *@
-@* <a type="button" method="get" asp-controller="comics" asp-action="GetPage" asp-route-webcomicname="@comicbook.Title"
+@* <a type="button" method="get" asp-controller="comics" asp-action="GetPage"
+    asp-route-webcomicname="@comicbook.Title"
     asp-route-pagenumber="0">@comicbook.Title</a> *@
 @* <button type="button" data-toggle="collapse" data-target="#@comicbook.Title-pages" aria-expanded="false"
     aria-controls="@comicbook.Title-pages">Expand/Collapse</button> *@
@@ -27,7 +68,8 @@
 @* { *@
 @* foreach (var comicpage in comicbook.ComicPages) *@
 @* { *@
-@* <a type="button" method="get" asp-controller="Comics" asp-action="GetPage" asp-route-webcomicname="@comicbook.Title"
+@* <a type="button" method="get" asp-controller="Comics" asp-action="GetPage"
+    asp-route-webcomicname="@comicbook.Title"
     asp-route-pagenumber="@comicpage.PageNumber"> *@
 @* @comicpage.PageNumber. @comicpage.PageTitle *@
 @* </a> *@
@@ -44,4 +86,5 @@
 @* </section> *@
 @* } *@
 @* } *@
-@* <button type="submit" method="get" asp-controller="Main" asp-action="GetPostWebcomic">Create New Webcomic</button> *@
+@* <button type="submit" method="get" asp-controller="Main" asp-action="GetPostWebcomic">Create New
+    Webcomic</button> *@

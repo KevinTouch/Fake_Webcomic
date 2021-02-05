@@ -24,7 +24,7 @@ namespace FakeWebcomic.Storage.Models
             return await Task.FromResult(Ok(comicBooks));
         }
 
-        // POST api/comicbook
+        // POST api/comicbook/
         [HttpPost]
         public async Task<IActionResult> AddComicBook(ComicBook comicBook)
         {
