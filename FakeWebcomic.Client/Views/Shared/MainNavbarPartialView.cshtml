@@ -2,36 +2,59 @@
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
         <a class="navbar-brand" asp-area="" asp-controller="Main" asp-action="Archive">FakeWebcomic</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Archive" method="get">FakeWebcomic Home</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="Archive"
+                        method="get">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="About" method="get">About FakeWebcomic</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Main" asp-action="About"
+                        method="get">About</a>
                 </li>
-                @if (@User == null)
+
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">Author Sign-In</a>
-                    </li>
+                    <p class="navbar-text" style="margin-bottom: 0px;margin-left: 650px;margin-top: 2px;">Hello,
+                        @User.Identity.Name</p>
+                    <form class="form-inline ml-auto" asp-controller="Account" asp-action="SignOutOkta" method="post">
+                        <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button"
+                            id="profile-button">Sign Out</button>
+                    </form>
                 }
                 else
                 {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">@User.Identity.Name's Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <p>Switch Profiles</p>
-                    </li>
-                    <li class="nav-item">
-                        <p>Sign Out</p>
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link text-dark" asp-controller="Account" asp-action="SignInOkta">
+                            Sign In</a>
                     </li>
                 }
+
+
+                @* @if (@User == null)
+                    {
+                    <li class="nav-item ml-auto">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="AuthorHome">
+                    Sign-In</a>
+                    </li>
+                    }
+                    else
+                    {
+                    <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Author"
+                    asp-action="AuthorHome">@User.Identity.Name's Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <p>Switch Profiles</p>
+                    </li>
+                    <li class="nav-item">
+                    <p>Sign Out</p>
+                    </li>
+                    } *@
             </ul>
         </div>
     </div>

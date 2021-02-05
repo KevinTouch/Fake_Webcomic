@@ -6,9 +6,12 @@
 
 @if (Model.ComicBooks != null)
 {
-    foreach (var comicbook in Model.ComicBooks)
-    {
-        <a type="button" method="get" asp-controller="comics" asp-action="GetPage" asp-route-webcomicname="@comicbook.Title"
-        asp-route-pagenumber="0">@comicbook.Title</a>
-    }
+    <h2>List of all the comic books: </h2>
+    <ul>
+    @foreach (var comicbook in Model.ComicBooks)
+        {
+            <li><a type="button" method="get" asp-controller="comics" asp-action="GetPage"
+                    asp-route-webcomicname="@comicbook.Title" asp-route-pagenumber="0">@comicbook.Title</a></li>
+        }
+    </ul>
 }

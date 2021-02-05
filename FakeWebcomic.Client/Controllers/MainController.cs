@@ -18,6 +18,9 @@ namespace FakeWebcomic.Client.Controllers
         private HttpClientHandler _clientHandler = new HttpClientHandler();
 
         //Archive
+        [Route("~/")]
+        [Route("/Main")]
+        [Route("~/Main/Archive")]
         [HttpGet]
         public async Task<IActionResult> Archive()
         {
