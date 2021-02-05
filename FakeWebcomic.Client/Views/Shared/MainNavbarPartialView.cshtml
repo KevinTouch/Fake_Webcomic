@@ -19,7 +19,10 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <p class="navbar-text" style="margin-bottom: 0px;margin-left: 650px;margin-top: 2px;">Hello,
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Author" asp-action="AuthorHome">Author</a>
+                    </li>
+                    <p class="navbar-text" style="margin-bottom: 0px;margin-left: 35rem;margin-top: 2px;">Hello,
                         @User.Identity.Name</p>
                     <form class="form-inline ml-auto" asp-controller="Account" asp-action="SignOutOkta" method="post">
                         <button type="submit" class="nav-link btn btn-link text-dark" id="logout-button"

@@ -27,16 +27,23 @@ namespace FakeWebcomic.Client.Controllers
                 var response = await _http.GetAsync(_webcomicsUri);
                 if (response.IsSuccessStatusCode)
                 {
-                    List<ComicBookModel> AuthorsComicBooks = new List<ComicBookModel>{};
-                    var ComicBooks = JsonConvert.DeserializeObject<List<ComicBookModel>>(await response.Content.ReadAsStringAsync());
-                    if (ComicBooks != null)
-                    {
-                        AuthorsComicBooks = (List<ComicBookModel>)ComicBooks.FindAll(
-                            c => c.Title == User.Identity.Name).OrderBy(c => c.Title);
-                    }
-                    return View("AuthorHomeView", new AuthorHomeViewModel(User.Identity.Name, AuthorsComicBooks));
+                    var userClaims = HttpContext.User.Claims;
+
+                    return View("AuthorHomeView");
+                    // List<ComicBookModel> AuthorsComicBooks = new List<ComicBookModel>{};
+                    // var ComicBooks = JsonConvert.DeserializeObject<List<ComicBookModel>>(await response.Content.ReadAsStringAsync());
+                    // if (ComicBooks != null)
+                    // {
+                    //     AuthorsComicBooks = (List<ComicBookModel>)ComicBooks.FindAll(
+                    //         c => c.Title == User.Identity.Name).OrderBy(c => c.Title);
+                    // }
+                    // return View("AuthorHomeView", new AuthorHomeViewModel(User.Identity.Name, AuthorsComicBooks));
                 }
-                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                else
+                {
+                    return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+                }
+
             }
         }
 
