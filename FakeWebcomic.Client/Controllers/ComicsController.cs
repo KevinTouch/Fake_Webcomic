@@ -50,9 +50,8 @@ namespace FakeWebcomic.Client.Controllers
                         if (ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber) != null)
                         {
                             page = ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber);
+                            page.ComicBook = new ComicBookModel(webcomic);
                             pageview = new ComicPageViewModel(page);
-                            pageview.ComicBook = new ComicBookModel(webcomic);
-                            pageview.ComicTitle = webcomic.Title;
                             if (PageNumber == pageview.FirstPageNumber)
                             {
                                 return View("FirstPageView",pageview);
@@ -97,7 +96,7 @@ namespace FakeWebcomic.Client.Controllers
                         ComicBookModel webcomic = ComicBooks.FirstOrDefault(c => c.Title == WebcomicName);
                         if (webcomic.ComicPages != null)
                         {
-                            webcomic.ComicPages = (ICollection<ComicPageModel>)webcomic.ComicPages.OrderBy(p => p.PageNumber);
+                            webcomic.ComicPages = webcomic.ComicPages.OrderBy(p => p.PageNumber).ToList();
                         }
                         return View("ComicArchiveView",new ComicArchiveViewModel(webcomic));
                     }
@@ -164,7 +163,7 @@ namespace FakeWebcomic.Client.Controllers
 
                         if (webcomic.ComicPages != null)
                         {
-                            webcomic.ComicPages = (ICollection<ComicPageModel>)webcomic.ComicPages.OrderBy(p => p.PageNumber);
+                            webcomic.ComicPages = webcomic.ComicPages.OrderBy(p => p.PageNumber).ToList();
                         }
                         ComicPageModel page = new ComicPageModel(){
                             ComicBookId = webcomic.EntityId,
@@ -237,7 +236,7 @@ namespace FakeWebcomic.Client.Controllers
                             return await (new AuthorController()).AuthorHome();
                         }
 
-                        webcomic.ComicPages = (ICollection<ComicPageModel>)webcomic.ComicPages.OrderBy(p => p.PageNumber);
+                        webcomic.ComicPages = webcomic.ComicPages.OrderBy(p => p.PageNumber).ToList();
                         if (webcomic.ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber) != null)
                         {
                             ComicPageModel page = webcomic.ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber);
@@ -355,7 +354,7 @@ namespace FakeWebcomic.Client.Controllers
                         ComicBookModel webcomic = ComicBooks.FirstOrDefault(c => c.Title == WebcomicName);
                         if (webcomic.ComicPages != null)
                         {
-                            webcomic.ComicPages = (ICollection<ComicPageModel>)webcomic.ComicPages.OrderBy(p => p.PageNumber);
+                            webcomic.ComicPages = webcomic.ComicPages.OrderBy(p => p.PageNumber).ToList();
                         }
                         return View("UpdateAboutView", new ComicBookViewModel(webcomic));
                     }
