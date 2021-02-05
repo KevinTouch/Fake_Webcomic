@@ -4,8 +4,11 @@
     Layout = "_MainLayout";
 }
 
-@foreach (var comicbook in Model.ComicBooks)
+@if (Model.ComicBooks != null)
 {
-    <a type="button" method="get" asp-controller="comics" asp-action="GetPage" asp-route-webcomicname="@comicbook.Title"
-    asp-route-pagenumber="0">@comicbook.Title</a>
+    foreach (var comicbook in Model.ComicBooks)
+    {
+        <a type="button" method="get" asp-controller="comics" asp-action="GetPage" asp-route-webcomicname="@comicbook.Title"
+        asp-route-pagenumber="0">@comicbook.Title</a>
+    }
 }

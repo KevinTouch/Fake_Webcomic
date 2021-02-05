@@ -7,7 +7,7 @@
 }
 
 @*open success/fail view in new tab*@
-<form target="_blank" asp-area="" asp-controller="Comics" asp-action="UpdateAbout" method="update">
-    @Html.Partial("AboutForm",Model)
+<form target="_blank" asp-area="" asp-controller="Comics" asp-action="UpdateAbout" method="post" asp-antiforgery="true">
+    @Html.Partial("AboutFormView",Model)
     <button type="submit">Update Webcomic!</button>
 </form>
