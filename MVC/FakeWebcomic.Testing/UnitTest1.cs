@@ -8,7 +8,7 @@ namespace FakeWebcomic.Testing
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
