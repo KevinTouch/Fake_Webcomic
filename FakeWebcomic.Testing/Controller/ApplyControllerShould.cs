@@ -1,6 +1,7 @@
 using Xunit;
 using Microsoft.AspNetCore.Mvc;
-using FakeWebcomic.Client.Views.Main;
+using FakeWebcomic.Client.Controllers;
+using System.Threading.Tasks;
 namespace FakeWebcomic.Testing.Controller
 {
     public class ApplyControllerShould
@@ -8,25 +9,18 @@ namespace FakeWebcomic.Testing.Controller
        [Fact]
         public void ReturnViewForMainArchive()
         {
-            var sut = new MainArchiveView();
-            IActionResult result = sut.Archive();
-            Asser.IsType<ViewResult>(result);
+            var sut = new MainController();
+            Task<IActionResult> result = sut.Archive();
+            Assert.IsType<Task<ViewResult>>(result);
         }
 
         [Fact]
         public void ReturnViewForMainAuthor()
         {
-            var sut = new AuthorHomeView();
-            IActionResult result = sut.AuthorHome();
-            Asser.IsType<ViewResult>(result);
+            var sut = new AuthorController();
+            Task<IActionResult> result = sut.AuthorHome();
+            Assert.IsType<Task<ViewResult>>(result);
         }
 
-        [Fact]
-        public void ReturnViewForMainAuthor()
-        {
-            var sut = new AuthorHomeView();
-            IActionResult result = sut.AuthorHome();
-            Asser.IsType<ViewResult>(result);
-        }
     }
 }
