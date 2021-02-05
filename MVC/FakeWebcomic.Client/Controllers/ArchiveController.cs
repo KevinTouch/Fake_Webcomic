@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using FakeWebcomic.Client.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
-using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
@@ -16,16 +14,17 @@ namespace FakeWebcomic.Client.Controllers
     {
         private HttpClientHandler _clientHandler;
 
-        [Authorize]
+        // [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            _clientHandler = new HttpClientHandler();
-            _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            // _clientHandler = new HttpClientHandler();
+            // _clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
-            using (var _http = new HttpClient(_clientHandler))
+            // using (var _http = new HttpClient(_clientHandler))
+            using (var _http = new HttpClient())
             {
-                _http.BaseAddress = new System.Uri("https://localhost:5001/api/");
+                _http.BaseAddress = new System.Uri("http://localhost:5000/api/");
 
                 var result = await _http.GetAsync("user");
                 if (result.IsSuccessStatusCode)

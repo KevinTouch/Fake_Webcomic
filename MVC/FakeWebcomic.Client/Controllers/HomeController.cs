@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FakeWebcomic.Client.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FakeWebcomic.Client.Controllers
 {
