@@ -44,12 +44,15 @@ namespace FakeWebcomic.Client.Controllers
                             return await (new ComicsController()).GetAbout(WebcomicName);
                         }
 
-                        List<ComicPageModel> ComicPages = (List<ComicPageModel>)webcomic.ComicPages.OrderBy(p => p.PageNumber);
-
+                        List<ComicPageModel> ComicPages = webcomic.ComicPages.OrderBy(p => p.PageNumber).ToList();
+                        ComicPageModel page;
+                        ComicPageViewModel pageview;
                         if (ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber) != null)
                         {
-                            ComicPageModel page = ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber);
-                            ComicPageViewModel pageview = new ComicPageViewModel(page);
+                            page = ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber);
+                            pageview = new ComicPageViewModel(page);
+                            pageview.ComicBook = new ComicBookModel(webcomic);
+                            pageview.ComicTitle = webcomic.Title;
                             if (PageNumber == pageview.FirstPageNumber)
                             {
                                 return View("FirstPageView",pageview);
@@ -61,7 +64,10 @@ namespace FakeWebcomic.Client.Controllers
                             }
                             return View("MiddlePageView",pageview);
                         }
-                        return View("LatestPageView",new ComicPageViewModel(ComicPages[^1]));
+                        page = ComicPages.Last();
+                        page.ComicBook = new ComicBookModel(webcomic);
+                        pageview = new ComicPageViewModel(page);
+                        return View("LatestPageView",pageview);
                         //If the page number is invalid, send to the default page (Latest).
                         //Should be impossible via any in-application links.
                     }
@@ -121,7 +127,7 @@ namespace FakeWebcomic.Client.Controllers
                         ComicBookModel webcomic = ComicBooks.FirstOrDefault(c => c.Title == WebcomicName);
                         if (webcomic.ComicPages != null)
                         {
-                            webcomic.ComicPages = (ICollection<ComicPageModel>)webcomic.ComicPages.OrderBy(p => p.PageNumber);
+                            webcomic.ComicPages = webcomic.ComicPages.OrderBy(p => p.PageNumber).ToList();
                         }
                         return View("ComicAboutView",new ComicBookViewModel(webcomic));
                     }
@@ -164,7 +170,8 @@ namespace FakeWebcomic.Client.Controllers
                             ComicBookId = webcomic.EntityId,
                             ComicBook = webcomic
                         };
-                        return View("NewPageView",new ComicPageViewModel(page));
+                        ComicPageViewModel pageview = new ComicPageViewModel(page);
+                        return View("NewPageView",pageview);
                     }
                     return await (new MainController()).Archive();
                     //If the webcomic doesn't exist, kick them back to the archive of webcomics.
@@ -234,6 +241,7 @@ namespace FakeWebcomic.Client.Controllers
                         if (webcomic.ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber) != null)
                         {
                             ComicPageModel page = webcomic.ComicPages.FirstOrDefault(p => p.PageNumber == PageNumber);
+                            page.ComicBook = webcomic;
                             ComicPageViewModel pageview = new ComicPageViewModel(page);
                             return View("UpdatePageView",pageview);
                         }

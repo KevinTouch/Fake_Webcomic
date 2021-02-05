@@ -48,7 +48,7 @@ namespace FakeWebcomic.Client.Models
 
             FirstPageNumber = _allPages[0].PageNumber;
             //We'll check in the Controller to make sure there's at least one comic; if not, the user
-            //will be directed to the About page and will never have the opportunity to click this 
+            //will be directed to the About page and will never have the opportunity to click this
             //dead link.
 
             if (_currentIndex < (_allPages.Count - 1))
